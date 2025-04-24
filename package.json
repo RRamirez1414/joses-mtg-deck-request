@@ -10,11 +10,17 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@headlessui/react": "^2.2.1",
+    "@headlessui/react": "^2.2.2",
     "@heroicons/react": "^2.2.0",
     "@tailwindcss/vite": "^4.1.3",
+    "@tanstack/react-query": "^5.74.4",
+    "ky": "^1.8.1",
+    "prettier": "^3.5.3",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
+    "react-hook-form": "^7.56.1",
+    "react-use": "^17.6.0",
+    "smtp2go-nodejs": "^0.3.5",
     "tailwindcss": "^4.1.3"
   },
   "devDependencies": {

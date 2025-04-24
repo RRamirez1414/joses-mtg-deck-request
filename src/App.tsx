@@ -1,294 +1,99 @@
-import './styles/global-styles.css'
-import InstagramIcon from './assets/instagram.svg'
-import BlueSkyIcon from './assets/Bluesky Logo.png'
-import YoutubeIcon from './assets/youtube.svg'
-import TwitterIcon from './assets/twitter.svg'
-import TikTokIcon from './assets/tiktok.svg'
 import { useState } from 'react'
-import { Dialog, DialogPanel } from '@headlessui/react'
-import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
-
-const navigation = [
-  { name: 'About Me', href: '#about' },
-  { name: 'What I do?', href: '#myduties' },
-]
+import './styles/global-styles.css'
+import { Navigation, Hero, MediaObject, DeckRequestForm } from './components'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 
 /**
  * MVP TODOs
- * - [ ] Add a contact form, have the user fill out their name, email, and an optional message.
+ * - [x] Add a contact form, have the user fill out their name, email, and an optional message.
  * - [ ] Add a card selector in the form so the user can pick who to build their deck around. use scryfall api for this
- * 
+ * - [ ] Use smtp2go to send the email to me with the form data
+ * - [ ] Add a loading spinner while the form is being submitted
+ * - [ ] Add a thank you dialog after the form is submitted
+ * - [ ] dark mode toggle
+ * - [ ] network error handling
+ * - [ ] add error boundaries
+ *
  */
 
+const queryClient = new QueryClient()
+
 function App() {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const [isFormOpen, setIsFormOpen] = useState(false)
+
   return (
-    <div className="bg-white">
-      <header className="absolute inset-x-0 top-0 z-50">
-        <nav aria-label="Global" className="flex items-center justify-between p-6 lg:px-8">
-          <div className="flex lg:flex-1">
-            {/* Home Icon */}
-          </div>
-          <div className="flex lg:hidden">
-            <button
-              type="button"
-              onClick={() => setMobileMenuOpen(true)}
-              className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700"
-            >
-              <span className="sr-only">Open main menu</span>
-              <Bars3Icon aria-hidden="true" className="size-6" />
-            </button>
-          </div>
-          <div className="hidden lg:flex lg:gap-x-12">
-            {navigation.map((item) => (
-              <a key={item.name} href={item.href} className="text-sm/6 font-semibold text-gray-900">
-                {item.name}
-              </a>
-            ))}
-          </div>
-          <div className="hidden lg:flex lg:flex-1 lg:justify-end items-center space-x-2">
-          <span className="text-sm/6 font-semibold text-gray-600 mr-2">
-            Follow me on
-          </span>
-          <InstagramLink />
-          <BlueSky />
-          <YoutubeLink />
-          <TwitterLink />
-          <TikTokLink />
-
-          </div>
-        </nav>
-        <Dialog open={mobileMenuOpen} onClose={setMobileMenuOpen} className="lg:hidden">
-          <div className="fixed inset-0 z-50" />
-          <DialogPanel className="fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
-            <div className="flex items-center justify-between">
-              
-              <button
-                type="button"
-                onClick={() => setMobileMenuOpen(false)}
-                className="-m-2.5 rounded-md p-2.5 text-gray-700"
-              >
-                <span className="sr-only">Close menu</span>
-                <XMarkIcon aria-hidden="true" className="size-6" />
-              </button>
+    <QueryClientProvider client={queryClient}>
+      <div className="bg-white">
+        <Navigation onNavItemClick={() => setIsFormOpen(false)} />
+        <div className="relative isolate px-6 pt-14 lg:px-8">
+          {isFormOpen ? (
+            <div className="p-4 mt-16 bg-white border-gray-200 border rounded-lg shadow-xl max-w-[1024px] mx-auto">
+              <DeckRequestForm onCancel={() => setIsFormOpen(false)} />
             </div>
-            <div className="mt-6 flow-root">
-              <div className="-my-6 divide-y divide-gray-500/10">
-                <div className="space-y-2 py-6">
-                  {navigation.map((item) => (
-                    <a
-                      key={item.name}
-                      href={item.href}
-                      className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-900 hover:bg-gray-50"
-                    >
-                      {item.name}
-                    </a>
-                  ))}
-                </div>
-                <div>
-                <span className="-mx-3 block rounded-lg px-3 pt-2.5 text-sm font-semibold text-gray-600"
-                  >
-                    Follow me on
-                </span>
-                <div className="flex gap-x-4">
-                
-                  <span className="-mx-3 block rounded-lg px-3 py-2.5 text-base/7 font-semibold text-gray-900 hover:bg-gray-50"
-                  >
-                    <InstagramLink />
-                  </span>
-                  <span className="-mx-3 block rounded-lg px-3 py-2.5 text-base/7 font-semibold text-gray-900 hover:bg-gray-50"
-                  >
-                    <BlueSky />
-                  </span>
-                  <span className="-mx-3 block rounded-lg px-3 py-2.5 text-base/7 font-semibold text-gray-900 hover:bg-gray-50"
-                  >
-                    <YoutubeLink />
-                  </span>
-                  <span className="-mx-3 block rounded-lg px-3 py-2.5 text-base/7 font-semibold text-gray-900 hover:bg-gray-50"
-                  >
-                    <TwitterLink />
-                  </span>
-                  <span className="-mx-3 block rounded-lg px-3 py-2.5 text-base/7 font-semibold text-gray-900 hover:bg-gray-50"
-                  >
-                    <TikTokLink />
-                  </span>
-                </div>
-                </div>
+          ) : (
+            <>
+              <Hero onGetStartedClick={() => setIsFormOpen(true)} />
+              {/* About Me */}
+              <div className="mx-auto max-w-[1024px] py-14" id="about">
+                <MediaObject
+                  title="About Me"
+                  description="Howdy! I'ma Hispanic content creator originally from Colorado! Currently residing in New Mexico, I create Magic the Gathering, Dungeons and Dragons, Comic book, and other nerdy content! I never thought people paying me for “videos,” felt right so this is my attempt to raise money to make better content for y'all while still getting you something. Thanks for stopping by and all your consideration!"
+                  imageSrc="./src/assets/aboutme.png"
+                  imageAlt="About Me"
+                />
               </div>
-            </div>
-          </DialogPanel>
-        </Dialog>
-      </header>
-
-      <div className="relative isolate px-6 pt-14 lg:px-8">
-        <div
-          aria-hidden="true"
-          className="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80"
-        >
+              <div className="mx-auto max-w-[1024px] py-14" id="myduties">
+                <MediaObject
+                  title="What I do?"
+                  description={
+                    <>
+                      <p>
+                        I love helping others enhance their gameplay experience
+                        by creating custom decks that suit their unique
+                        playstyles. I specialize in creating personalized Magic
+                        the Gathering decks tailored to you.
+                      </p>
+                      <br />
+                      <p>
+                        Let me help you bring your vision to life with a
+                        custom-built deck designed just for you. I offer a range
+                        of services, including deck building, card selection,
+                        and gameplay strategy. Whether you're a casual player or
+                        a competitive gamer, I can help you take your game to
+                        the next level.
+                      </p>
+                      <br />
+                      <p>
+                        I also create content for my social media platforms,
+                        including YouTube, Instagram, and TikTok. I share tips
+                        and tricks for deck building, gameplay strategy, and
+                        more. My goal is to help you become a better player and
+                        have more fun while playing Magic the Gathering.
+                      </p>
+                    </>
+                  }
+                  imageSrc="./src/assets/decks.png"
+                  imageAlt="What I do"
+                />
+              </div>
+            </>
+          )}
           <div
-            style={{
-              clipPath:
-                'polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)',
-            }}
-            className="relative left-[calc(50%-11rem)] aspect-1155/678 w-[36.125rem] -translate-x-1/2 rotate-[30deg] bg-linear-to-tr from-[#ff80b5] to-[#9089fc] opacity-30 sm:left-[calc(50%-30rem)] sm:w-[72.1875rem]"
-          />
-        </div>
-        <div className="mx-auto max-w-2xl py-32 sm:py-48 lg:py-56">
-          <div className="hidden sm:mb-8 sm:flex sm:justify-center">
-            <div className="relative rounded-full px-3 py-1 text-sm/6 text-gray-600 ring-1 ring-gray-900/10 hover:ring-gray-900/20">
-              View my past deck builds!{' '}
-              <a href="https://moxfield.com/users/Galapaghost" target='_blank' className="font-semibold text-purple-600">
-                <span aria-hidden="true" className="absolute inset-0" />
-                Read more <span aria-hidden="true">&rarr;</span>
-              </a>
-            </div>
+            aria-hidden="true"
+            className="absolute inset-x-0 top-[calc(100%-13rem)] -z-10 transform-gpu overflow-hidden blur-3xl sm:top-[calc(100%-30rem)]"
+          >
+            <div
+              style={{
+                clipPath:
+                  'polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)',
+              }}
+              className="relative left-[calc(50%+3rem)] aspect-1155/678 w-[36.125rem] -translate-x-1/2 bg-linear-to-tr from-[#ff80b5] to-[#9089fc] opacity-30 sm:left-[calc(50%+36rem)] sm:w-[72.1875rem]"
+            />
           </div>
-          <div className="text-center">
-            <h1 className="text-5xl font-semibold tracking-tight text-balance text-gray-900 sm:text-7xl">
-              Enrich Your Magic the Gathering Experience
-            </h1>
-            <p className="mt-8 text-lg font-medium text-pretty text-gray-500 sm:text-xl/8">
-              I specialize in creating personalized Magic the Gathering decks tailored to your unique playstyle and preferences. Let me help you bring your vision to life with a custom-built deck designed just for you.
-            </p>
-            <div className="mt-10 flex items-center justify-center gap-x-6">
-              <a
-                href="#"
-                className="rounded-md bg-purple-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-xs hover:bg-purple-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-purple-600"
-              >
-                Get started
-              </a>
-              <a href="#" className="text-sm/6 font-semibold text-gray-900">
-                Learn more <span aria-hidden="true">→</span>
-              </a>
-            </div>
-          </div>
-        </div>
-        {/* About Me */}
-        <div className='mx-auto max-w-[1024px] py-14' id='about'>
-          <MediaObject
-            title="About Me"
-            description="Howdy! I'ma Hispanic content creator originally from Colorado! Currently residing in New Mexico, I create Magic the Gathering, Dungeons and Dragons, Comic book, and other nerdy content! I never thought people paying me for “videos,” felt right so this is my attempt to raise money to make better content for y'all while still getting you something. Thanks for stopping by and all your consideration!"
-            imageSrc="./src/assets/aboutme.png"
-            imageAlt="About Me"
-          />
-        </div>
-        <div className='mx-auto max-w-[1024px] py-14' id='myduties'>
-          <MediaObject
-            title="What I do?"
-            description="I love helping others enhance their gameplay experience by creating custom decks that suit their unique playstyles. I specialize in creating personalized Magic the Gathering decks tailored to you. Let me help you bring your vision to life with a custom-built deck designed just for you. I offer a range of services, including deck building, card selection, and gameplay strategy. Whether you're a casual player or a competitive gamer, I can help you take your game to the next level."
-            imageSrc="https://tailwindui.com/img/ecommerce-images/home-page-01-product-01.jpg"
-            imageAlt="What I do"
-          />
-        </div>
-        <div
-          aria-hidden="true"
-          className="absolute inset-x-0 top-[calc(100%-13rem)] -z-10 transform-gpu overflow-hidden blur-3xl sm:top-[calc(100%-30rem)]"
-        >
-          <div
-            style={{
-              clipPath:
-                'polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)',
-            }}
-            className="relative left-[calc(50%+3rem)] aspect-1155/678 w-[36.125rem] -translate-x-1/2 bg-linear-to-tr from-[#ff80b5] to-[#9089fc] opacity-30 sm:left-[calc(50%+36rem)] sm:w-[72.1875rem]"
-          />
         </div>
       </div>
-
-      
-    </div>
+    </QueryClientProvider>
   )
 }
 
 export default App
-
-
-function MediaObject({
-  title,
-  description,
-  imageSrc,
-  imageAlt,
-}: {
-  title: string
-  description: string
-  imageSrc: string
-  imageAlt: string
-}) {
-  return (
-    <div className="sm:flex bg-white border-gray-200 border rounded-lg shadow-xl min-h-[250px]">
-      <div className="mb-4 shrink-0 sm:mb-0 sm:mr-4">
-        <img
-          className="h-full w-full rounded-lg object-cover max-w-[15rem]"
-          //  className="h-32 w-full border border-gray-300 bg-white text-gray-300 sm:w-32"
-          src={imageSrc}
-          alt={imageAlt}
-        />
-      </div>
-      <div className='pr-12 py-8'>
-        <h4 className="text-3xl font-bold mb-2">{title}</h4>
-        <p className="mt-1 text-gray-500 font-medium">
-          {description}
-        </p>
-      </div>
-    </div>
-  )
-}
-
-function InstagramLink() {
-  return (
-    <a href="https://www.instagram.com/mr.josesanchez/"  className="text-sm/6 font-semibold text-gray-900" target='_blank'>
-      <img
-        alt=""
-        src={InstagramIcon}
-        className="h-8 w-auto"
-      />
-    </a>
-  )
-}
-
-function BlueSky() {
-  return (
-    <a href="https://bsky.app/profile/notjustnerdytv.bsky.social"  className="text-sm/6 font-semibold text-gray-900" target='_blank'>
-      <img
-        alt=""
-        src={BlueSkyIcon}
-        className="h-8 w-auto"
-      />
-    </a>
-  )
-}
-
-function YoutubeLink() {
-  return (
-    <a href="https://www.youtube.com/@notjustnerdytv"  className="text-sm/6 font-semibold text-gray-900" target='_blank'>
-      <img
-        alt=""
-        src={YoutubeIcon}
-        className="h-8 w-auto"
-      />
-    </a>
-  )
-}
-
-function TwitterLink() {
-  return (
-    <a href="https://x.com/joseas1993"  className="text-sm/6 font-semibold text-gray-900" target='_blank'>
-      <img
-        alt=""
-        src={TwitterIcon}
-        className="h-8 w-auto"
-      />
-    </a>
-  )
-}
-
-function TikTokLink() {
-  return (
-    <a href="https://www.tiktok.com/404?fromUrl=/Galapaghost93"  className="text-sm/6 font-semibold text-gray-900" target='_blank'>
-      <img
-        alt=""
-        src={TikTokIcon}
-        className="h-8 w-auto"
-      />
-    </a>
-  )
-}

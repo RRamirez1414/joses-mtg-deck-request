@@ -2,6 +2,8 @@ import { useState } from 'react'
 import './styles/global-styles.css'
 import { Navigation, Hero, MediaObject, DeckRequestForm } from './components'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import AboutMeImage from './assets/aboutme.png'
+import DecksImage from './assets/decks.png'
 
 /**
  * MVP TODOs
@@ -38,7 +40,7 @@ function App() {
                 <MediaObject
                   title="About Me"
                   description="Howdy! I'ma Hispanic content creator originally from Colorado! Currently residing in New Mexico, I create Magic the Gathering, Dungeons and Dragons, Comic book, and other nerdy content! I never thought people paying me for “videos,” felt right so this is my attempt to raise money to make better content for y'all while still getting you something. Thanks for stopping by and all your consideration!"
-                  imageSrc="./assets/aboutme.png"
+                  imageSrc={AboutMeImage}
                   imageAlt="About Me"
                 />
               </div>
@@ -72,7 +74,7 @@ function App() {
                       </p>
                     </>
                   }
-                  imageSrc="./assets/decks.png"
+                  imageSrc={DecksImage}
                   imageAlt="What I do"
                 />
               </div>

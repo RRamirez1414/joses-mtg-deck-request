@@ -6,9 +6,9 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 /**
  * MVP TODOs
  * - [x] Add a contact form, have the user fill out their name, email, and an optional message.
- * - [ ] Add a card selector in the form so the user can pick who to build their deck around. use scryfall api for this
+ * - [x] Add a card selector in the form so the user can pick who to build their deck around. use scryfall api for this
  * - [ ] Use smtp2go to send the email to me with the form data
- * - [ ] Add a loading spinner while the form is being submitted
+ * - [ ] Add a loading spinner while the form is being submitted / cards are being fetched
  * - [ ] Add a thank you dialog after the form is submitted
  * - [ ] dark mode toggle
  * - [ ] network error handling
@@ -38,7 +38,7 @@ function App() {
                 <MediaObject
                   title="About Me"
                   description="Howdy! I'ma Hispanic content creator originally from Colorado! Currently residing in New Mexico, I create Magic the Gathering, Dungeons and Dragons, Comic book, and other nerdy content! I never thought people paying me for “videos,” felt right so this is my attempt to raise money to make better content for y'all while still getting you something. Thanks for stopping by and all your consideration!"
-                  imageSrc="./src/assets/aboutme.png"
+                  imageSrc="./assets/aboutme.png"
                   imageAlt="About Me"
                 />
               </div>
@@ -72,7 +72,7 @@ function App() {
                       </p>
                     </>
                   }
-                  imageSrc="./src/assets/decks.png"
+                  imageSrc="./assets/decks.png"
                   imageAlt="What I do"
                 />
               </div>

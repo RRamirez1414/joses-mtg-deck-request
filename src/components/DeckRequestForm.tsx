@@ -1,4 +1,8 @@
-import { useGetScryfallCardQuery, useScryfallAutocompleteQuery } from '../hooks'
+import {
+  useGetScryfallCardQuery,
+  useScryfallAutocompleteQuery,
+  useCreateDeckRequestMutation,
+} from '../hooks'
 import { useMemo, useState } from 'react'
 import { useDebounce } from 'react-use'
 import {
@@ -44,6 +48,9 @@ const DeckRequestForm = ({ onCancel }: { onCancel: () => void }) => {
   const scryfallAutocompleteQuery = useScryfallAutocompleteQuery(debouncedTerm)
   const scryfallCardQuery = useGetScryfallCardQuery(watch('cardName')?.value)
 
+  // mutations
+  const createDeckRequestMutation = useCreateDeckRequestMutation()
+
   // variables/functions
   const autoCompleteOptions = useMemo<Array<AutoCompleteOption>>(() => {
     if (scryfallAutocompleteQuery.data) {
@@ -55,8 +62,18 @@ const DeckRequestForm = ({ onCancel }: { onCancel: () => void }) => {
     return []
   }, [scryfallAutocompleteQuery.data])
 
-  const onSubmit: SubmitHandler<DeckRequestFormInput> = (data) =>
+  const onSubmit: SubmitHandler<DeckRequestFormInput> = (data) => {
     console.log({ data })
+
+    // TODO: add on success and on error handlers
+    createDeckRequestMutation.mutate({
+      firstName: data.firstName,
+      lastName: data.lastName,
+      email: data.email,
+      description: data.description,
+      cardName: data.cardName?.value ?? null,
+    })
+  }
 
   // effects
   useDebounce(

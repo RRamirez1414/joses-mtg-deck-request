@@ -15,7 +15,7 @@ import DecksImage from './assets/decks.png'
  * - [ ] dark mode toggle
  * - [ ] network error handling
  * - [ ] add error boundaries
- *
+ * - [ ] fix navigation not working from the form page
  */
 
 const queryClient = new QueryClient()

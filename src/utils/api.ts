@@ -13,3 +13,10 @@ export const scryfallApi = ky.create({
     backoffLimit: 1000,
   },
 })
+
+export const vercelApi = ky.create({
+  prefixUrl: '/api',
+  headers: {
+    'Content-Type': 'application/json',
+  },
+})

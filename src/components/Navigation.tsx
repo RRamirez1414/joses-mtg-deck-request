@@ -1,5 +1,9 @@
 import { Dialog, DialogPanel } from '@headlessui/react'
-import { Bars3Icon, XMarkIcon, MoonIcon } from '@heroicons/react/24/outline'
+import {
+  Bars3Icon,
+  XMarkIcon,
+  // MoonIcon
+} from '@heroicons/react/24/outline'
 import {
   InstagramLink,
   BlueSky,
@@ -8,7 +12,7 @@ import {
   TikTokLink,
 } from './MediaLinks'
 import { useState } from 'react'
-import clsx from 'clsx'
+// import clsx from 'clsx'
 // import { useLocalStorage } from 'react-use'
 
 // TODO: set theme in local storage

@@ -1,5 +1,5 @@
 import { Dialog, DialogPanel } from '@headlessui/react'
-import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
+import { Bars3Icon, XMarkIcon, MoonIcon } from '@heroicons/react/24/outline'
 import {
   InstagramLink,
   BlueSky,
@@ -8,6 +8,10 @@ import {
   TikTokLink,
 } from './MediaLinks'
 import { useState } from 'react'
+import clsx from 'clsx'
+// import { useLocalStorage } from 'react-use'
+
+// TODO: set theme in local storage
 
 const navigation = [
   { name: 'About Me', href: '#about' },
@@ -16,6 +20,7 @@ const navigation = [
 
 const Navigation = ({ onNavItemClick }: { onNavItemClick: () => void }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  // const [theme, setTheme] = useState('light')
 
   return (
     <header className="absolute inset-x-0 top-0 z-50">
@@ -23,7 +28,27 @@ const Navigation = ({ onNavItemClick }: { onNavItemClick: () => void }) => {
         aria-label="Global"
         className="flex items-center justify-between p-6 lg:px-8"
       >
-        <div className="flex lg:flex-1">{/* Home Icon */}</div>
+        <div className="flex lg:flex-1">
+          {/* Toggle dark mode */}
+          {/* <button
+            type="button"
+            className={clsx(
+              '-m-2.5 inline-flex items-center justify-center rounded-md p-2.5',
+              theme === 'light' && ' text-zinc-600 hover:text-zinc-800 ',
+              theme === 'dark' && ' text-white hover:text-gray-100 dark',
+            )}
+            onClick={() => {
+              if (theme === 'dark') {
+                setTheme('light')
+              } else {
+                setTheme('dark')
+              }
+            }}
+          >
+            <span className="sr-only">Toggle dark mode</span>
+            <MoonIcon aria-hidden="true" className="size-6 stroke-2" />
+          </button> */}
+        </div>
         <div className="flex lg:hidden">
           <button
             type="button"
@@ -82,6 +107,10 @@ const Navigation = ({ onNavItemClick }: { onNavItemClick: () => void }) => {
                     key={item.name}
                     href={item.href}
                     className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-900 hover:bg-gray-50"
+                    onClick={() => {
+                      setMobileMenuOpen(false)
+                      onNavItemClick()
+                    }}
                   >
                     {item.name}
                   </a>

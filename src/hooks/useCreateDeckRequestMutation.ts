@@ -15,7 +15,7 @@ type RequestBodyArgs = {
   email: string
   description: string | null
   cardName: string | null
-  // TODO: add more fields
+  cardImageUrls: string[] | null
 }
 
 const createDeckRequest = async (body: RequestBodyArgs) => {

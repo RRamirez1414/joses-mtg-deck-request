@@ -55,7 +55,7 @@ export function TwitterLink() {
 export function TikTokLink() {
   return (
     <a
-      href="https://www.tiktok.com/404?fromUrl=/Galapaghost93"
+      href="https://www.tiktok.com/@notjustnerdytv"
       className="text-sm/6 font-semibold text-gray-900"
       target="_blank"
     >

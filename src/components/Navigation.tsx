@@ -8,7 +8,7 @@ import {
   InstagramLink,
   BlueSky,
   YoutubeLink,
-  TwitterLink,
+  // TwitterLink,
   TikTokLink,
 } from './MediaLinks'
 import { useState } from 'react'
@@ -82,7 +82,7 @@ const Navigation = ({ onNavItemClick }: { onNavItemClick: () => void }) => {
           <InstagramLink />
           <BlueSky />
           <YoutubeLink />
-          <TwitterLink />
+          {/* <TwitterLink /> */}
           <TikTokLink />
         </div>
       </nav>
@@ -134,9 +134,9 @@ const Navigation = ({ onNavItemClick }: { onNavItemClick: () => void }) => {
                   <span className="-mx-3 block rounded-lg px-3 py-2.5 text-base/7 font-semibold text-gray-900 hover:bg-gray-50">
                     <YoutubeLink />
                   </span>
-                  <span className="-mx-3 block rounded-lg px-3 py-2.5 text-base/7 font-semibold text-gray-900 hover:bg-gray-50">
+                  {/* <span className="-mx-3 block rounded-lg px-3 py-2.5 text-base/7 font-semibold text-gray-900 hover:bg-gray-50">
                     <TwitterLink />
-                  </span>
+                  </span> */}
                   <span className="-mx-3 block rounded-lg px-3 py-2.5 text-base/7 font-semibold text-gray-900 hover:bg-gray-50">
                     <TikTokLink />
                   </span>

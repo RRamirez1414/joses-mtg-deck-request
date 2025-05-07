@@ -7,7 +7,7 @@ import TikTokIcon from '../assets/tiktok.svg'
 export function InstagramLink() {
   return (
     <a
-      href="https://www.instagram.com/mr.josesanchez/"
+      href="https://www.instagram.com/not.just.nerdy?igsh=MW9oams2bjlhenc4ZA=="
       className="text-sm/6 font-semibold text-gray-900"
       target="_blank"
     >
